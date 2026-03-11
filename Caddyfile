@@ -1,3 +1,14 @@
+# Production — static build
 http://finance.crocbot.de, http://finance.crocbot {
-    reverse_proxy localhost:5555
+	reverse_proxy localhost:5555
+}
+
+# Dev — Vite HMR (live reload on save)
+http://dev.finance.crocbot.de {
+	reverse_proxy localhost:5174
+}
+
+# Photos — redirect
+http://photo.crocbot.de {
+	redir https://kane.pixelunion.eu{uri} permanent
 }
