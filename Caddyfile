@@ -1,0 +1,3 @@
+http://finance.crocbot.de, http://finance.crocbot {
+    reverse_proxy localhost:5555
+}
