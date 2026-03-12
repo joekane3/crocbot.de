@@ -1,8 +1,3 @@
-# Landing page
-http://crocbot.de, http://www.crocbot.de {
-	reverse_proxy localhost:5560
-}
-
 # Finance — production (static build)
 http://finance.crocbot.de {
 	reverse_proxy localhost:5555
@@ -13,12 +8,7 @@ http://dev.finance.crocbot.de {
 	reverse_proxy localhost:5174
 }
 
-# Photos — redirect to Pixelunion
-http://photo.crocbot.de {
-	redir https://kane.pixelunion.eu{uri}
-}
-
-# Watchlist — placeholder
+# Watchlist — Express app (API + static frontend)
 http://watch.crocbot.de {
-	reverse_proxy localhost:5561
+	reverse_proxy localhost:5562
 }

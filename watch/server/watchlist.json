@@ -1,0 +1,195 @@
+{
+  "films": [
+    {
+      "id": "bf85b5f0-02e8-4548-841e-0fdb482d2045",
+      "title": "Erin Brockovich",
+      "year": 2000,
+      "tmdbId": 462,
+      "poster": "https://image.tmdb.org/t/p/w500/jEMvWBWVjndZT0vJnLrRWi9ajea.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w1280/3HmLKhahTxX2ALTWlagr92pZrU7.jpg",
+      "synopsis": "A twice-divorced mother of three who sees an injustice, takes on the bad guy and wins -- with a little help from her push-up bra. Erin goes to work for an attorney and comes across medical records describing illnesses clustered in one nearby town. She starts investigating and soon exposes a monumental cover-up.",
+      "rating": 7.4,
+      "runtime": 131,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Steven Soderbergh",
+      "cast": [
+        "Julia Roberts",
+        "Albert Finney",
+        "Aaron Eckhart",
+        "Marg Helgenberger",
+        "Cherry Jones"
+      ],
+      "streaming": [
+        {
+          "provider": "Sat.1 emotions Amazon Channel",
+          "logoPath": "https://image.tmdb.org/t/p/w92/eOHPreGr7UvOGMEpVqXWZdcJAiT.jpg",
+          "type": "flatrate"
+        },
+        {
+          "provider": "Seven Entertainment Amazon Channel",
+          "logoPath": "https://image.tmdb.org/t/p/w92/91mdl623RUIlQGr3ZlbB6uxKM9W.jpg",
+          "type": "flatrate"
+        },
+        {
+          "provider": "Magenta TV+",
+          "logoPath": "https://image.tmdb.org/t/p/w92/qqTyjCCJuuARytrY7rNRAKka1VF.jpg",
+          "type": "flatrate"
+        },
+        {
+          "provider": "Apple TV Store",
+          "logoPath": "https://image.tmdb.org/t/p/w92/SPnB1qiCkYfirS2it3hZORwGVn.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Amazon Video",
+          "logoPath": "https://image.tmdb.org/t/p/w92/qR6FKvnPBx2O37FDg8PNM7efwF3.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Sky Store",
+          "logoPath": "https://image.tmdb.org/t/p/w92/59TxOAYcoFaufd6CWm465oPchD.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Rakuten TV",
+          "logoPath": "https://image.tmdb.org/t/p/w92/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "maxdome Store",
+          "logoPath": "https://image.tmdb.org/t/p/w92/cBN4jd4wPq6on0kESiTlevqvlnL.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "MagentaTV",
+          "logoPath": "https://image.tmdb.org/t/p/w92/nCsFBTEmlCMc5NA4fwPuluTz6AO.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Videoload",
+          "logoPath": "https://image.tmdb.org/t/p/w92/dKh2TJ9lTWV0UIcDQGMnMyQ8AIN.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Freenet meinVOD",
+          "logoPath": "https://image.tmdb.org/t/p/w92/xo4zowa5gbKT4z65ZathH6H4Cdg.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Google Play Movies",
+          "logoPath": "https://image.tmdb.org/t/p/w92/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "type": "buy"
+        },
+        {
+          "provider": "YouTube",
+          "logoPath": "https://image.tmdb.org/t/p/w92/pTnn5JwWr4p3pG8H6VrpiQo7Vs0.jpg",
+          "type": "buy"
+        }
+      ],
+      "addedBy": "Joe",
+      "addedDate": "2026-03-12",
+      "watched": true,
+      "watchedDate": "2026-03-12"
+    },
+    {
+      "id": "56770fbc-9525-4118-9dd2-d423692daa40",
+      "title": "Robin Morgan: What a Man, What a Man, What a Man, What a Mighty Good Man (Say It Again Now)",
+      "year": 2019,
+      "tmdbId": 699393,
+      "poster": "https://image.tmdb.org/t/p/w500/dsv9RFYO7tFdJpn7FS0Vj4Pd9sY.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w1280/9YjzNYaRbBHt53fWCj8HcFIgWOI.jpg",
+      "synopsis": "29 year old Welshman and \"woke bloke\" Robin Morgan explores what it means to be a father, and to have a father, to be a son and to have one. Crammed with childhood related chortles and self deprecating wit, Robin asks what on earth makes a good male role model? And why can't everyone have a best mate like Dave?",
+      "rating": 8,
+      "runtime": 54,
+      "genres": [
+        "Comedy"
+      ],
+      "director": null,
+      "cast": [
+        "Robin Morgan"
+      ],
+      "streaming": [],
+      "addedBy": "Joe",
+      "addedDate": "2026-03-12",
+      "watched": false,
+      "watchedDate": null
+    },
+    {
+      "id": "842684d3-9dc3-447b-907a-7c6ba627e9cc",
+      "title": "Four Lions",
+      "year": 2010,
+      "tmdbId": 37495,
+      "poster": "https://image.tmdb.org/t/p/w500/x4JzaRPXBs9wiHCe3e3ymXWuwfd.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w1280/bVmDpF2VzVivzH8GVFXfVJeRPd7.jpg",
+      "synopsis": "Four Lions tells the story of a group of British jihadists who push their abstract dreams of glory to the breaking point. As the wheels fly off, and their competing ideologies clash, what emerges is an emotionally engaging (and entirely plausible) farce.",
+      "rating": 7,
+      "runtime": 97,
+      "genres": [
+        "Comedy",
+        "Crime",
+        "Drama"
+      ],
+      "director": "Chris Morris",
+      "cast": [
+        "Riz Ahmed",
+        "Nigel Lindsay",
+        "Kayvan Novak",
+        "Adeel Akhtar",
+        "Arsher Ali"
+      ],
+      "streaming": [
+        {
+          "provider": "Apple TV Store",
+          "logoPath": "https://image.tmdb.org/t/p/w92/SPnB1qiCkYfirS2it3hZORwGVn.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Amazon Video",
+          "logoPath": "https://image.tmdb.org/t/p/w92/qR6FKvnPBx2O37FDg8PNM7efwF3.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Rakuten TV",
+          "logoPath": "https://image.tmdb.org/t/p/w92/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "maxdome Store",
+          "logoPath": "https://image.tmdb.org/t/p/w92/cBN4jd4wPq6on0kESiTlevqvlnL.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Videobuster",
+          "logoPath": "https://image.tmdb.org/t/p/w92/82hFfWsPYtyskBrnkL8Y36vHcVf.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "MagentaTV",
+          "logoPath": "https://image.tmdb.org/t/p/w92/nCsFBTEmlCMc5NA4fwPuluTz6AO.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Videoload",
+          "logoPath": "https://image.tmdb.org/t/p/w92/dKh2TJ9lTWV0UIcDQGMnMyQ8AIN.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Verleihshop",
+          "logoPath": "https://image.tmdb.org/t/p/w92/4JfSo3RoLuGtvY3jyjaVtxcwp2A.jpg",
+          "type": "rent"
+        },
+        {
+          "provider": "Freenet meinVOD",
+          "logoPath": "https://image.tmdb.org/t/p/w92/xo4zowa5gbKT4z65ZathH6H4Cdg.jpg",
+          "type": "rent"
+        }
+      ],
+      "addedBy": "Joe",
+      "addedDate": "2026-03-12",
+      "watched": false,
+      "watchedDate": null
+    }
+  ]
+}
