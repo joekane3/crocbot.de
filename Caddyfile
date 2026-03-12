@@ -1,14 +1,24 @@
-# Production — static build
-http://finance.crocbot.de, http://finance.crocbot {
+# Landing page
+http://crocbot.de, http://www.crocbot.de {
+	reverse_proxy localhost:5560
+}
+
+# Finance — production (static build)
+http://finance.crocbot.de {
 	reverse_proxy localhost:5555
 }
 
-# Dev — Vite HMR (live reload on save)
+# Finance — dev (Vite HMR, live reload)
 http://dev.finance.crocbot.de {
 	reverse_proxy localhost:5174
 }
 
-# Photos — redirect
+# Photos — redirect to Pixelunion
 http://photo.crocbot.de {
-	redir https://kane.pixelunion.eu{uri} permanent
+	redir https://kane.pixelunion.eu{uri}
+}
+
+# Watchlist — placeholder
+http://watch.crocbot.de {
+	reverse_proxy localhost:5561
 }
