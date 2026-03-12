@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>crocbot.de</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#0f172a; color:#e2e8f0; min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .container { max-width:480px; width:100%; padding:40px 24px; text-align:center; }
+  .logo { font-size:48px; margin-bottom:8px; }
+  h1 { font-size:28px; font-weight:700; color:#f8fafc; margin-bottom:4px; }
+  .subtitle { font-size:14px; color:#64748b; margin-bottom:40px; }
+  .apps { display:flex; flex-direction:column; gap:12px; }
+  a.app { display:flex; align-items:center; gap:16px; padding:16px 20px; background:#1e293b; border-radius:12px; text-decoration:none; color:#e2e8f0; transition:background .15s, transform .1s; }
+  a.app:hover { background:#334155; transform:translateY(-1px); }
+  a.app:active { transform:translateY(0); }
+  .app-icon { font-size:28px; flex-shrink:0; width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:#0f172a; border-radius:10px; }
+  .app-info { text-align:left; }
+  .app-name { font-size:16px; font-weight:600; color:#f8fafc; }
+  .app-desc { font-size:12px; color:#64748b; margin-top:2px; }
+  .footer { margin-top:48px; font-size:11px; color:#334155; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">🐊</div>
+  <h1>crocbot.de</h1>
+  <p class="subtitle">Kane family home network</p>
+  <div class="apps">
+    <a class="app" href="http://finance.crocbot.de">
+      <div class="app-icon">💰</div>
+      <div class="app-info">
+        <div class="app-name">Finance</div>
+        <div class="app-desc">Family financial model & planner</div>
+      </div>
+    </a>
+    <a class="app" href="http://watch.crocbot.de">
+      <div class="app-icon">🎬</div>
+      <div class="app-info">
+        <div class="app-name">Watchlist</div>
+        <div class="app-desc">Films & shows to watch together</div>
+      </div>
+    </a>
+    <a class="app" href="http://photo.crocbot.de">
+      <div class="app-icon">📸</div>
+      <div class="app-info">
+        <div class="app-name">Photos</div>
+        <div class="app-desc">Family photo library</div>
+      </div>
+    </a>
+  </div>
+  <p class="footer">Served from Joe's Mac mini</p>
+</div>
+</body>
+</html>
