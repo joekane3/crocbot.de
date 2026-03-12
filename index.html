@@ -11,7 +11,8 @@
   .container { max-width:480px; width:100%; padding:40px 24px; text-align:center; }
   .logo { font-size:48px; margin-bottom:8px; }
   h1 { font-size:28px; font-weight:700; color:#f8fafc; margin-bottom:4px; }
-  .subtitle { font-size:14px; color:#64748b; margin-bottom:40px; }
+  .subtitle { font-size:14px; color:#64748b; margin-bottom:8px; }
+  .note { font-size:12px; color:#475569; margin-bottom:40px; padding:10px 16px; background:#1e293b; border-radius:8px; border-left:3px solid #3b82f6; text-align:left; }
   .apps { display:flex; flex-direction:column; gap:12px; }
   a.app { display:flex; align-items:center; gap:16px; padding:16px 20px; background:#1e293b; border-radius:12px; text-decoration:none; color:#e2e8f0; transition:background .15s, transform .1s; }
   a.app:hover { background:#334155; transform:translateY(-1px); }
@@ -28,22 +29,23 @@
   <div class="logo">🐊</div>
   <h1>crocbot.de</h1>
   <p class="subtitle">Kane family home network</p>
+  <div class="note">🏠 These apps are hosted locally — they only work when you're on the home WiFi.</div>
   <div class="apps">
-    <a class="app" href="http://finance.crocbot.de">
+    <a class="app" href="http://192.168.178.138:5555">
       <div class="app-icon">💰</div>
       <div class="app-info">
         <div class="app-name">Finance</div>
         <div class="app-desc">Family financial model & planner</div>
       </div>
     </a>
-    <a class="app" href="http://watch.crocbot.de">
+    <a class="app" href="http://192.168.178.138:5561">
       <div class="app-icon">🎬</div>
       <div class="app-info">
         <div class="app-name">Watchlist</div>
         <div class="app-desc">Films & shows to watch together</div>
       </div>
     </a>
-    <a class="app" href="http://photo.crocbot.de">
+    <a class="app" href="https://kane.pixelunion.eu/">
       <div class="app-icon">📸</div>
       <div class="app-info">
         <div class="app-name">Photos</div>
