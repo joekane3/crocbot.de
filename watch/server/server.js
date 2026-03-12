@@ -9,6 +9,58 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DB_PATH = join(__dirname, 'watchlist.json');
 const TMDB_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE = 'https://api.themoviedb.org/3';
+const PPLX_KEY = process.env.PPLX_API_KEY;
+
+async function askPerplexity(query) {
+  if (!PPLX_KEY) return [];
+  try {
+    const res = await fetch('https://api.perplexity.ai/chat/completions', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${PPLX_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'sonar',
+        messages: [
+          { role: 'system', content: 'You are a film and TV recommendation engine. Given a description, return ONLY a JSON array of up to 8 specific film or TV show titles that match. Format: [{"title":"...","year":2000,"type":"movie"},{"title":"...","year":2020,"type":"tv"}]. No explanation, just the JSON array.' },
+          { role: 'user', content: query }
+        ],
+        max_tokens: 500
+      })
+    });
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content || '';
+    // Extract JSON array from response
+    const match = text.match(/\[[\s\S]*\]/);
+    if (!match) return [];
+    return JSON.parse(match[0]);
+  } catch (e) {
+    console.error('Perplexity error:', e.message);
+    return [];
+  }
+}
+
+async function perplexitySearch(query) {
+  const suggestions = await askPerplexity(query);
+  const results = [];
+  for (const s of suggestions.slice(0, 8)) {
+    try {
+      const type = s.type === 'tv' ? 'tv' : 'movie';
+      const endpoint = type === 'tv' ? '/search/tv' : '/search/movie';
+      const search = await tmdbFetch(`${endpoint}?query=${encodeURIComponent(s.title)}${s.year ? `&year=${s.year}` : ''}`);
+      const top = search.results?.[0];
+      if (top) {
+        results.push({
+          tmdbId: top.id,
+          mediaType: type,
+          title: top.title || top.name,
+          year: (top.release_date || top.first_air_date) ? parseInt(top.release_date || top.first_air_date) : null,
+          poster: top.poster_path ? `https://image.tmdb.org/t/p/w500${top.poster_path}` : null,
+          overview: top.overview
+        });
+      }
+    } catch (e) { /* skip failed lookups */ }
+  }
+  return results;
+}
 
 const app = express();
 app.use(cors());
@@ -197,42 +249,32 @@ app.post('/api/films', async (req, res) => {
     let results = [];
 
     if (isDescriptiveQuery(query)) {
-      // Try discover for both movies and TV
-      const [movieResults, tvResults] = await Promise.all([
-        discoverSearch(query, 'movie').catch(() => ({ results: [] })),
-        discoverSearch(query, 'tv').catch(() => ({ results: [] }))
-      ]);
+      // Perplexity first for descriptive queries — it understands natural language
+      const aiResults = await perplexitySearch(query);
+      results = [...aiResults];
 
-      const movies = (movieResults.results || []).slice(0, 6).map(r => ({
-        tmdbId: r.id, mediaType: 'movie', title: r.title,
-        year: r.release_date ? parseInt(r.release_date) : null,
-        poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
-        overview: r.overview
-      }));
-      const tvs = (tvResults.results || []).slice(0, 4).map(r => ({
-        tmdbId: r.id, mediaType: 'tv', title: r.name,
-        year: r.first_air_date ? parseInt(r.first_air_date) : null,
-        poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
-        overview: r.overview
-      }));
+      // Supplement with TMDB discover if Perplexity gave few results
+      if (results.length < 4) {
+        const [movieResults, tvResults] = await Promise.all([
+          discoverSearch(query, 'movie').catch(() => ({ results: [] })),
+          discoverSearch(query, 'tv').catch(() => ({ results: [] }))
+        ]);
 
-      results = [...movies, ...tvs];
+        const movies = (movieResults.results || []).slice(0, 4).map(r => ({
+          tmdbId: r.id, mediaType: 'movie', title: r.title,
+          year: r.release_date ? parseInt(r.release_date) : null,
+          poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
+          overview: r.overview
+        }));
+        const tvs = (tvResults.results || []).slice(0, 2).map(r => ({
+          tmdbId: r.id, mediaType: 'tv', title: r.name,
+          year: r.first_air_date ? parseInt(r.first_air_date) : null,
+          poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
+          overview: r.overview
+        }));
 
-      // If discover gave poor results, also try title search as fallback
-      if (results.length < 3) {
-        const search = await tmdbFetch(`/search/multi?query=${encodeURIComponent(query)}`);
-        const extra = (search.results || [])
-          .filter(r => r.media_type === 'movie' || r.media_type === 'tv')
-          .slice(0, 5)
-          .map(r => ({
-            tmdbId: r.id, mediaType: r.media_type, title: r.title || r.name,
-            year: (r.release_date || r.first_air_date) ? parseInt(r.release_date || r.first_air_date) : null,
-            poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
-            overview: r.overview
-          }));
-        // Dedupe
         const seen = new Set(results.map(r => `${r.mediaType}:${r.tmdbId}`));
-        results.push(...extra.filter(r => !seen.has(`${r.mediaType}:${r.tmdbId}`)));
+        results.push(...[...movies, ...tvs].filter(r => !seen.has(`${r.mediaType}:${r.tmdbId}`)));
       }
     } else {
       // Direct title search
@@ -246,6 +288,13 @@ app.post('/api/films', async (req, res) => {
           poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
           overview: r.overview
         }));
+    }
+
+    // Fallback to Perplexity AI for title searches with poor results too
+    if (results.length < 2 && !isDescriptiveQuery(query)) {
+      const aiResults = await perplexitySearch(query);
+      const seen = new Set(results.map(r => `${r.mediaType}:${r.tmdbId}`));
+      results.push(...aiResults.filter(r => !seen.has(`${r.mediaType}:${r.tmdbId}`)));
     }
 
     if (!results.length) return res.status(404).json({ error: 'Nothing found' });

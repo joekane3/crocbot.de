@@ -264,6 +264,79 @@
       "addedDate": "2026-03-12",
       "watched": false,
       "watchedDate": null
+    },
+    {
+      "id": "0410888d-111e-4e38-b8b1-d7f51626f8ad",
+      "title": "The Ballad of Wallis Island",
+      "year": 2025,
+      "tmdbId": 1122099,
+      "mediaType": "movie",
+      "poster": "https://image.tmdb.org/t/p/w500/haS6bnqDqZoi5sYcCPJWaj2yMbB.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w1280/1nn7nCFRTKeWOXbtjrFxfSvf1EI.jpg",
+      "synopsis": "An eccentric lottery winner who lives alone on a remote island tries to make his fantasies come true by getting his favourite musicians to perform at his home.",
+      "rating": 7.2,
+      "runtime": 100,
+      "seasons": null,
+      "episodes": null,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Music"
+      ],
+      "director": "James Griffiths",
+      "cast": [
+        "Tom Basden",
+        "Tim Key",
+        "Carey Mulligan",
+        "Sian Clifford",
+        "Akemnji Ndifornyen"
+      ],
+      "streaming": [
+        {
+          "provider": "Apple TV Store",
+          "logoPath": "https://image.tmdb.org/t/p/w92/SPnB1qiCkYfirS2it3hZORwGVn.jpg",
+          "type": "buy"
+        },
+        {
+          "provider": "Amazon Video",
+          "logoPath": "https://image.tmdb.org/t/p/w92/qR6FKvnPBx2O37FDg8PNM7efwF3.jpg",
+          "type": "buy"
+        },
+        {
+          "provider": "Sky Store",
+          "logoPath": "https://image.tmdb.org/t/p/w92/59TxOAYcoFaufd6CWm465oPchD.jpg",
+          "type": "buy"
+        },
+        {
+          "provider": "Rakuten TV",
+          "logoPath": "https://image.tmdb.org/t/p/w92/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "type": "buy"
+        },
+        {
+          "provider": "maxdome Store",
+          "logoPath": "https://image.tmdb.org/t/p/w92/cBN4jd4wPq6on0kESiTlevqvlnL.jpg",
+          "type": "buy"
+        },
+        {
+          "provider": "MagentaTV",
+          "logoPath": "https://image.tmdb.org/t/p/w92/nCsFBTEmlCMc5NA4fwPuluTz6AO.jpg",
+          "type": "buy"
+        },
+        {
+          "provider": "Videoload",
+          "logoPath": "https://image.tmdb.org/t/p/w92/dKh2TJ9lTWV0UIcDQGMnMyQ8AIN.jpg",
+          "type": "buy"
+        },
+        {
+          "provider": "Freenet meinVOD",
+          "logoPath": "https://image.tmdb.org/t/p/w92/xo4zowa5gbKT4z65ZathH6H4Cdg.jpg",
+          "type": "buy"
+        }
+      ],
+      "addedBy": "Joe",
+      "addedDate": "2026-03-12",
+      "watched": false,
+      "watchedDate": null
     }
   ]
 }
