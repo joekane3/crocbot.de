@@ -1,13 +1,16 @@
 import MarqueeStats from './MarqueeStats';
 import FilmCard from './FilmCard';
 
-export default function WatchlistView({ films, loading, onSelect, onRefresh, title, emptyText, isWatched }) {
+export default function WatchlistView({ films, allFilms, loading, onSelect, onRefresh, title, emptyText, isWatched }) {
+  const all = allFilms || films;
+  const watchedCount = all.filter(f => f.watched).length;
+  const pendingCount = all.filter(f => !f.watched).length;
   return (
     <>
       <MarqueeStats
-        total={films.length}
-        watched={isWatched ? films.length : 0}
-        pending={isWatched ? 0 : films.length}
+        total={all.length}
+        watched={watchedCount}
+        pending={pendingCount}
         title={title}
       />
       <section style={{ padding: 12 }}>

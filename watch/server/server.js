@@ -102,26 +102,154 @@ app.get('/api/films', (req, res) => {
   res.json(films);
 });
 
+// Genre mapping for natural language queries
+const GENRE_MAP = {
+  movie: {
+    action:28, adventure:12, animation:16, comedy:35, crime:80, documentary:99,
+    drama:18, family:10751, fantasy:14, history:36, horror:27, music:10402,
+    mystery:9648, romance:10749, scifi:878, 'sci-fi':878, 'science fiction':878,
+    thriller:53, war:10752, western:37, gangster:80, mafia:80, heist:80,
+    spy:53, superhero:28, zombie:27, slasher:27, romantic:10749, funny:35,
+    scary:27, sad:18, emotional:18, kids:10751, children:10751, cartoon:16,
+    anime:16, musical:10402, biographical:36, biopic:36, sports:18, noir:80
+  },
+  tv: {
+    action:10759, adventure:10759, animation:16, comedy:35, crime:80, documentary:99,
+    drama:18, family:10751, fantasy:10765, kids:10762, mystery:9648, news:10763,
+    reality:10764, scifi:10765, 'sci-fi':10765, 'science fiction':10765,
+    soap:10766, talk:10767, war:10768, western:37, funny:35, scary:9648,
+    thriller:80, gangster:80, mafia:80
+  }
+};
+
+const DESCRIPTIVE_WORDS = /\b(about|with|film|movie|show|series|something|anything|like|similar|genre|set in|based on|involving|featuring|starring)\b/i;
+const DECADE_RE = /\b(in the |from the )?(\d{2})s\b/i;
+const YEAR_RANGE_RE = /\b(19|20)\d{2}\s*[-–]\s*(19|20)\d{2}\b/;
+const SINGLE_YEAR_RE = /\b(19|20)\d{2}\b/;
+
+function isDescriptiveQuery(query) {
+  return DESCRIPTIVE_WORDS.test(query) || DECADE_RE.test(query);
+}
+
+function extractGenreIds(query, type = 'movie') {
+  const map = GENRE_MAP[type];
+  const ids = new Set();
+  const lower = query.toLowerCase();
+  for (const [word, id] of Object.entries(map)) {
+    if (lower.includes(word)) ids.add(id);
+  }
+  return [...ids];
+}
+
+function extractYearRange(query) {
+  const decadeMatch = query.match(DECADE_RE);
+  if (decadeMatch) {
+    const short = parseInt(decadeMatch[2]);
+    const base = short >= 30 ? 1900 + short : 2000 + short;
+    return { gte: `${base}-01-01`, lte: `${base + 9}-12-31` };
+  }
+  const rangeMatch = query.match(YEAR_RANGE_RE);
+  if (rangeMatch) {
+    return { gte: `${rangeMatch[0].split(/[-–]/)[0].trim()}-01-01`, lte: `${rangeMatch[0].split(/[-–]/)[1].trim()}-12-31` };
+  }
+  const yearMatch = query.match(SINGLE_YEAR_RE);
+  if (yearMatch) {
+    const y = parseInt(yearMatch[0]);
+    return { gte: `${y}-01-01`, lte: `${y}-12-31` };
+  }
+  return null;
+}
+
+async function discoverSearch(query, type = 'movie') {
+  const genreIds = extractGenreIds(query, type);
+  const years = extractYearRange(query);
+  const dateField = type === 'tv' ? 'first_air_date' : 'primary_release_date';
+
+  let params = `sort_by=vote_count.desc&vote_average.gte=6&vote_count.gte=100`;
+  if (genreIds.length) params += `&with_genres=${genreIds.join(',')}`;
+  if (years) {
+    params += `&${dateField}.gte=${years.gte}&${dateField}.lte=${years.lte}`;
+  }
+
+  // Also try keyword search for more specific terms
+  const stopWords = new Set(['about','with','film','movie','show','series','something','anything','like','similar','the','a','an','in','on','from','set','based','involving','featuring','starring','genre','funny','scary','sad','good','great','best','classic']);
+  const keywords = query.toLowerCase().split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w) && !GENRE_MAP[type][w]);
+
+  let keywordIds = [];
+  if (keywords.length > 0) {
+    try {
+      const kw = await tmdbFetch(`/search/keyword?query=${encodeURIComponent(keywords.join(' '))}`);
+      keywordIds = (kw.results || []).slice(0, 3).map(k => k.id);
+    } catch (e) { /* ignore */ }
+  }
+  if (keywordIds.length) params += `&with_keywords=${keywordIds.join('|')}`;
+
+  const endpoint = type === 'tv' ? '/discover/tv' : '/discover/movie';
+  return tmdbFetch(`${endpoint}?${params}`);
+}
+
 // POST /api/films — search movies AND TV shows
 app.post('/api/films', async (req, res) => {
   try {
     const { query, addedBy } = req.body;
     if (!query) return res.status(400).json({ error: 'query required' });
 
-    const search = await tmdbFetch(`/search/multi?query=${encodeURIComponent(query)}`);
-    const filtered = (search.results || []).filter(r => r.media_type === 'movie' || r.media_type === 'tv');
-    if (!filtered.length) return res.status(404).json({ error: 'Nothing found' });
+    let results = [];
 
-    const results = filtered.slice(0, 8).map(r => ({
-      tmdbId: r.id,
-      mediaType: r.media_type,
-      title: r.title || r.name,
-      year: (r.release_date || r.first_air_date) ? parseInt(r.release_date || r.first_air_date) : null,
-      poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
-      overview: r.overview
-    }));
+    if (isDescriptiveQuery(query)) {
+      // Try discover for both movies and TV
+      const [movieResults, tvResults] = await Promise.all([
+        discoverSearch(query, 'movie').catch(() => ({ results: [] })),
+        discoverSearch(query, 'tv').catch(() => ({ results: [] }))
+      ]);
 
-    res.json({ results, addedBy });
+      const movies = (movieResults.results || []).slice(0, 6).map(r => ({
+        tmdbId: r.id, mediaType: 'movie', title: r.title,
+        year: r.release_date ? parseInt(r.release_date) : null,
+        poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
+        overview: r.overview
+      }));
+      const tvs = (tvResults.results || []).slice(0, 4).map(r => ({
+        tmdbId: r.id, mediaType: 'tv', title: r.name,
+        year: r.first_air_date ? parseInt(r.first_air_date) : null,
+        poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
+        overview: r.overview
+      }));
+
+      results = [...movies, ...tvs];
+
+      // If discover gave poor results, also try title search as fallback
+      if (results.length < 3) {
+        const search = await tmdbFetch(`/search/multi?query=${encodeURIComponent(query)}`);
+        const extra = (search.results || [])
+          .filter(r => r.media_type === 'movie' || r.media_type === 'tv')
+          .slice(0, 5)
+          .map(r => ({
+            tmdbId: r.id, mediaType: r.media_type, title: r.title || r.name,
+            year: (r.release_date || r.first_air_date) ? parseInt(r.release_date || r.first_air_date) : null,
+            poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
+            overview: r.overview
+          }));
+        // Dedupe
+        const seen = new Set(results.map(r => `${r.mediaType}:${r.tmdbId}`));
+        results.push(...extra.filter(r => !seen.has(`${r.mediaType}:${r.tmdbId}`)));
+      }
+    } else {
+      // Direct title search
+      const search = await tmdbFetch(`/search/multi?query=${encodeURIComponent(query)}`);
+      results = (search.results || [])
+        .filter(r => r.media_type === 'movie' || r.media_type === 'tv')
+        .slice(0, 8)
+        .map(r => ({
+          tmdbId: r.id, mediaType: r.media_type, title: r.title || r.name,
+          year: (r.release_date || r.first_air_date) ? parseInt(r.release_date || r.first_air_date) : null,
+          poster: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : null,
+          overview: r.overview
+        }));
+    }
+
+    if (!results.length) return res.status(404).json({ error: 'Nothing found' });
+    res.json({ results: results.slice(0, 10), addedBy });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

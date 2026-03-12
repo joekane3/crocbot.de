@@ -190,6 +190,80 @@
       "addedDate": "2026-03-12",
       "watched": false,
       "watchedDate": null
+    },
+    {
+      "id": "03ec57d0-7dcc-4652-8c40-4fca363bcae6",
+      "title": "One Hundred Years of Solitude",
+      "year": 2024,
+      "tmdbId": 207333,
+      "mediaType": "tv",
+      "poster": "https://image.tmdb.org/t/p/w500/oX8CAf3eyCknNPXX1IxdmAuv6jH.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w1280/kTz1SMehYwydblnASFZLjbIOt5T.jpg",
+      "synopsis": "In the mythical town Macondo, seven generations of the Buendía family navigate love, oblivion and the inescapability of their past — and their fate.",
+      "rating": 7.9,
+      "runtime": "1 season",
+      "seasons": 1,
+      "episodes": 8,
+      "genres": [
+        "Drama",
+        "Sci-Fi & Fantasy"
+      ],
+      "director": null,
+      "cast": [
+        "Claudio Cataño",
+        "Gino Montesinos",
+        "Ruggero Pasquarelli",
+        "Marco Antonio González",
+        "Susana Morales"
+      ],
+      "streaming": [
+        {
+          "provider": "Netflix",
+          "logoPath": "https://image.tmdb.org/t/p/w92/pbpMk2JmcoNnQwx5JGpXngfoWtp.jpg",
+          "type": "flatrate"
+        },
+        {
+          "provider": "Netflix Standard with Ads",
+          "logoPath": "https://image.tmdb.org/t/p/w92/dpR8r13zWDeUR0QkzWidrdMxa56.jpg",
+          "type": "flatrate"
+        }
+      ],
+      "addedBy": "Joe",
+      "addedDate": "2026-03-12",
+      "watched": false,
+      "watchedDate": null
+    },
+    {
+      "id": "956a1411-a6f2-4370-a3f8-57c5facaaba6",
+      "title": "Project Hail Mary",
+      "year": 2026,
+      "tmdbId": 687163,
+      "mediaType": "movie",
+      "poster": "https://image.tmdb.org/t/p/w500/cCx1m530ph5FmtabVVUpUchEmhe.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w1280/2I1OFQJ0L9T0dpU6FobKFWV2PxX.jpg",
+      "synopsis": "Science teacher Ryland Grace wakes up on a spaceship light years from home with no recollection of who he is or how he got there. As his memory returns, he begins to uncover his mission: solve the riddle of the mysterious substance causing the sun to die out. He must call on his scientific knowledge and unorthodox ideas to save everything on Earth from extinction… but an unexpected friendship means he may not have to do it alone.",
+      "rating": 9,
+      "runtime": 157,
+      "seasons": null,
+      "episodes": null,
+      "genres": [
+        "Science Fiction",
+        "Adventure",
+        "Mystery"
+      ],
+      "director": "Phil Lord",
+      "cast": [
+        "Ryan Gosling",
+        "Sandra Hüller",
+        "Lionel Boyce",
+        "Ken Leung",
+        "Milana Vayntrub"
+      ],
+      "streaming": [],
+      "addedBy": "Joe",
+      "addedDate": "2026-03-12",
+      "watched": false,
+      "watchedDate": null
     }
   ]
 }

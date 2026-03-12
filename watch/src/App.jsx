@@ -56,6 +56,7 @@ export default function App() {
         {tab === 'watchlist' && (
           <WatchlistView
             films={unwatched}
+            allFilms={films}
             loading={loading}
             onSelect={setSelectedFilm}
             onRefresh={loadFilms}
@@ -72,6 +73,7 @@ export default function App() {
         {tab === 'watched' && (
           <WatchlistView
             films={watched}
+            allFilms={films}
             loading={loading}
             onSelect={setSelectedFilm}
             onRefresh={loadFilms}
