@@ -1,0 +1,17 @@
+[server]
+hosts = 0.0.0.0:5232
+max_connections = 8
+
+[auth]
+type = htpasswd
+htpasswd_filename = /Users/botcroc/.openclaw/workspace/crocbot.de/calendar/radicale/users
+htpasswd_encryption = plain
+
+[storage]
+filesystem_folder = /Users/botcroc/.openclaw/workspace/crocbot.de/calendar/radicale/data
+
+[rights]
+type = owner_only
+
+[logging]
+level = info

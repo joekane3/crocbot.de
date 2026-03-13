@@ -12,3 +12,8 @@ http://dev.finance.crocbot.de {
 http://watch.crocbot.de {
 	reverse_proxy localhost:5562
 }
+
+# Calendar — Express app (API + static frontend)
+http://calendar.crocbot.de {
+	reverse_proxy localhost:5563
+}
