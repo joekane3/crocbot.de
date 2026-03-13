@@ -15,7 +15,7 @@ app.use(express.json());
 // --- CalDAV (Radicale) config ---
 const CALDAV_URL = process.env.CALDAV_URL || 'http://localhost:5232/kane/family/';
 const CALDAV_USER = process.env.CALDAV_USER || 'kane';
-const CALDAV_PASS = process.env.CALDAV_PASS || 'doughnut';
+const CALDAV_PASS = process.env.CALDAV_PASS || '85521';
 const caldavAuth = 'Basic ' + Buffer.from(`${CALDAV_USER}:${CALDAV_PASS}`).toString('base64');
 
 // --- Proton ICS (read-only overlay) ---
